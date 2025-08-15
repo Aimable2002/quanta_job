@@ -1,0 +1,75 @@
+.about {
+    padding: 100px 0;
+    background-color: white;
+  }
+  
+  .aboutContent {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+  }
+  
+  .aboutText {
+    flex: 1;
+  }
+  
+  .aboutText h3 {
+    font-size: 1.8rem;
+    color: #6e48aa;
+    margin-bottom: 15px;
+  }
+  
+  .aboutText p {
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #333;
+  }
+  
+  .aboutImage {
+    flex: 1;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .aboutImg {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .imageOverlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    color: white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  
+  .imageOverlay p {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  
+  @media (max-width: 992px) {
+    .aboutContent {
+      flex-direction: column;
+      gap: 30px;
+    }
+    
+    .aboutText, .aboutImage {
+      width: 100%;
+    }
+    
+    .about {
+      padding: 60px 0;
+    }
+  }

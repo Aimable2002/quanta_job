@@ -1,0 +1,174 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s ease;
+    padding: 15px 0;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  
+  .header.scrolled {
+    padding: 10px 0;
+    background-color: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.12);
+  }
+  
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .headerContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 60px;
+  }
+  
+  .logoContainer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1001;
+    transition: all 0.3s ease;
+  }
+  
+  .logo {
+    height: 44px;
+    width: auto;
+    transition: all 0.3s ease;
+  }
+  
+  .quantaText {
+    font-size: 1.1rem;
+    font-weight: 900;
+    margin-left: 0.5rem;
+    letter-spacing: 0.05em;
+    color: #5d3a8a;
+    vertical-align: middle;
+  }
+  
+  .nav {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navList {
+    display: flex;
+    flex-wrap: nowrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 32px;
+  }
+  
+  .navItem {
+    position: relative;
+  }
+  
+  .navItem a {
+    font-weight: 700;
+    color: #1a1a2e;
+    padding: 8px 0;
+    font-size: 1.08rem;
+    transition: all 0.3s ease;
+    position: relative;
+    background: none;
+    white-space: nowrap;
+  }
+  
+  .navItem a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2.5px;
+    background: linear-gradient(90deg, #6e48aa, #9d50bb);
+    transition: all 0.3s ease;
+    border-radius: 2px;
+  }
+  
+  .navItem a:hover::after {
+    width: 100%;
+  }
+  
+  .navItem a:hover {
+    color: #6e48aa;
+    font-weight: 700;
+    background: none;
+  }
+  
+  .hamburger {
+    display: none;
+    cursor: pointer;
+    z-index: 1001;
+    margin-left: 20px;
+    background: none;
+    border: none;
+    padding: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .hamburger:focus {
+    outline: none;
+  }
+  
+  @media (max-width: 1224px) {
+    .hamburger {
+      display: block;
+    }
+  
+    .navList {
+      position: fixed;
+      top: 80px;
+      left: -100%;
+      width: 50vw;
+      min-width: 220px;
+      max-width: 400px;
+      height: calc(100vh - 80px);
+      background-color: white;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 40px 0;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+      overflow-y: auto;
+      border-radius: 10px 0 0 10px;
+    }
+  
+    .navList.active {
+      left: 0;
+    }
+  
+    .navItem {
+      margin: 8px 0;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.4s ease;
+    }
+  
+    .navList.active .navItem {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  
+    .navItem a {
+      font-size: 1.2rem;
+      padding: 10px 20px;
+    }
+  
+    .navItem a::after {
+      height: 3px;
+      bottom: 5px;
+    }
+  }

@@ -1,0 +1,116 @@
+/* Fade In */
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Slide In From Left */
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  /* Slide In From Right */
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  /* Slide In From Bottom */
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Bounce */
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-20px);
+    }
+    60% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  /* Pulse */
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  /* Animation Classes */
+  .animateFadeIn {
+    animation: fadeIn 0.5s ease forwards;
+  }
+  
+  .animateSlideLeft {
+    animation: slideInLeft 1s ease forwards;
+  }
+  
+  .animateSlideRight {
+    animation: slideInRight 1s ease forwards;
+  }
+  
+  .animateSlideUp {
+    animation: slideInUp 1s ease forwards;
+  }
+  
+  .delay1 {
+    animation-delay: 0.2s;
+  }
+  
+  .delay2 {
+    animation-delay: 0.4s;
+  }
+  
+  .delay3 {
+    animation-delay: 0.6s;
+  }
+  
+  .pulse {
+    animation: pulse 2s infinite;
+  }
+  
+  /* Scroll Animation */
+  [data-animate] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  
+  [data-animate].animate {
+    opacity: 1;
+    transform: translateY(0);
+  }

@@ -1,0 +1,84 @@
+.internship {
+    padding: 100px 0;
+    background-color: white;
+  }
+  
+  .internshipContent {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+  }
+  
+  .internshipImage {
+    flex: 1;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .internshipImg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .internshipText {
+    flex: 1;
+  }
+  
+  .internshipText h3 {
+    font-size: 1.8rem;
+    color: #6e48aa;
+    margin-bottom: 20px;
+  }
+  
+  .internshipText p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #333;
+  }
+  
+  .internshipFeatures {
+    list-style: none;
+    margin: 30px 0;
+    padding: 0;
+  }
+  
+  .internshipFeatures li {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    font-size: 1.05rem;
+  }
+  
+  .internshipFeatures i {
+    color: #6e48aa;
+    margin-right: 10px;
+    font-size: 1.2rem;
+  }
+  
+  .internshipButtons {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+  }
+  
+  @media (max-width: 992px) {
+    .internshipContent {
+      flex-direction: column;
+      gap: 30px;
+    }
+    
+    .internshipImage, .internshipText {
+      width: 100%;
+    }
+    
+    .internshipButtons {
+      flex-direction: column;
+    }
+    
+    .internship {
+      padding: 60px 0;
+    }
+  }

@@ -1,0 +1,118 @@
+.testimonials {
+    padding: 100px 0;
+    background-color: #f9f9f9;
+  }
+  
+  .testimonialSlider {
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+    max-width: 800px;
+  }
+  
+  .testimonialTrack {
+    display: flex;
+    transition: transform 0.5s ease;
+    width: 100%;
+  }
+  
+  .testimonialSlide {
+    min-width: 100%;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    text-align: center;
+  }
+  
+  .testimonialContent {
+    font-style: italic;
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 1.2rem;
+    line-height: 1.7;
+  }
+  
+  .testimonialAuthor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .testimonialAvatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+  }
+  
+  .testimonialName {
+    font-weight: 600;
+    color: #1a1a2e;
+    text-align: left;
+  }
+  
+  .testimonialRole {
+    font-size: 0.9rem;
+    color: #666;
+    text-align: left;
+  }
+  
+  .sliderControls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    gap: 20px;
+  }
+  
+  .sliderPrev,
+  .sliderNext {
+    background-color: #6e48aa;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .sliderPrev:hover,
+  .sliderNext:hover {
+    background-color: #9d50bb;
+  }
+  
+  .sliderDots {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .sliderDot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    padding: 0;
+  }
+  
+  .sliderDot.active {
+    background-color: #6e48aa;
+  }
+  
+  @media (max-width: 768px) {
+    .testimonials {
+      padding: 60px 0;
+    }
+    
+    .testimonialContent {
+      font-size: 1rem;
+    }
+  }

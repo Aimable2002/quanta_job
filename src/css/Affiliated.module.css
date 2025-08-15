@@ -1,0 +1,62 @@
+.affiliateCta {
+    background: linear-gradient(135deg, #6e48aa, #9d50bb);
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+  }
+  
+  .affiliateContent {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .affiliateTitle {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: white;
+  }
+  
+  .affiliateText {
+    max-width: 600px;
+    margin: 0 auto 30px;
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .btnPrimary {
+    background: white;
+    color: #6e48aa;
+    border: 2px solid transparent;
+  }
+  
+  .btnPrimary:hover {
+    background: transparent;
+    color: white;
+    border-color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  @media (max-width: 768px) {
+    .affiliateCta {
+      padding: 60px 0;
+    }
+    
+    .affiliateTitle {
+      font-size: 2rem;
+    }
+    
+    .affiliateText {
+      font-size: 1rem;
+    }
+  }

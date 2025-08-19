@@ -1,12 +1,15 @@
 .internship {
-    padding: 100px 0;
+    padding-left: 10%;
+    padding-right: 10%;
     background-color: white;
+    
   }
   
   .internshipContent {
     display: flex;
     align-items: center;
     gap: 50px;
+    padding-top: 2rem;
   }
   
   .internshipImage {
@@ -68,6 +71,7 @@
     .internshipContent {
       flex-direction: column;
       gap: 30px;
+      padding-top: 2rem;
     }
     
     .internshipImage, .internshipText {

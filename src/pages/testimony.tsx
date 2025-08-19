@@ -34,9 +34,9 @@ const Testimonials = () => {
 
   return (
     <section className={styles.testimonials}>
-      <div className={styles.container}>
+      <div className=''>
         <div className='flex text-center flex-col'>
-          <h2 className={styles.sectionTitle}>What People Say</h2>
+          <h2 className='font-bold text-4xl w-full'>What People Say</h2>
           <p className={styles.sectionSubtitle}>Success stories from our community</p>
         </div>
         <div className={styles.testimonialSlider}>

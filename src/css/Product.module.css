@@ -60,11 +60,11 @@
   }
   
   .leftArrow {
-    left: -25px;
+    left: 60px;
   }
   
   .rightArrow {
-    right: -25px;
+    right: 60px;
   }
   
   .productsContainer:hover .scrollArrow {
@@ -203,7 +203,8 @@
     }
     
     .productsScroll {
-      padding: 10px 0;
+      padding: 10px;
+      /* background-color: #9d50bb; */
     }
     
     .productCard {

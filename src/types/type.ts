@@ -1,3 +1,5 @@
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+
 export interface NavItem {
     name: string;
     path: string;
@@ -21,14 +23,14 @@ export interface NavItem {
     icon: string;
     link: string;
   }
-  
-  export interface Value {
-    id: number;
-    title: string;
-    description: string;
-    icon: string;
-  }
-  
+
+export interface Value {
+  id: number;
+  title: string;
+  description: string;
+  icon: IconDefinition;
+}
+
   export interface Testimonial {
     id: number;
     content: string;

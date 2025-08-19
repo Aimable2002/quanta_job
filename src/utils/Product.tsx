@@ -20,11 +20,11 @@ const Products = () => {
       scrollContainerRef.current.scrollLeft += 300;
       setScrollPosition(scrollContainerRef.current.scrollLeft);
     }
-  };
+  }
 
   return (
     <section className={styles.products} id="products">
-      <div className={styles.container}>
+      <div style={{paddingLeft: '10%', paddingRight: '10%'}}>
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>QUANTA Products</h2>
           <p className={styles.sectionSubtitle}>Our latest innovations changing the tech landscape</p>
@@ -35,7 +35,7 @@ const Products = () => {
             onClick={scrollLeft}
             aria-label="Scroll left"
           >
-            <FaChevronLeft />
+            <FaChevronLeft className='flex text-center'/>
           </button>
           <div className={styles.productsScroll} ref={scrollContainerRef}>
             {productsData.map((product: Product) => (

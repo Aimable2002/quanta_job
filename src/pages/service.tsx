@@ -7,7 +7,7 @@ const Services = () => {
     <section className={styles.services} id="services">
       <div className={styles.container}>
         <div className='flex flex-col text-center'>
-          <h2 className={styles.sectionTitle}>Our Services</h2>
+          <h2 className='font-bold text-4xl w-full'>Our Services</h2>
           <p className={styles.sectionSubtitle}>
             World-class technologies driven by AI, AGI, and superintelligence
           </p>

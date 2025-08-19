@@ -1,14 +1,17 @@
 import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import styles from '../css/internaship.module.css'
 import interns from '../assets/images/inters.jpg'
+
 
 const Internship = () => {
   return (
     <section className={styles.internship} id="internship">
       <div className={styles.container}>
-        <div className='flex flex-col text-center'>
-          <h2 className={styles.sectionTitle}>Internship Program</h2>
-          <p className={styles.sectionSubtitle}>Shape your future with QUANTA</p>
+        <div className='flex flex-col text-center pb-100'>
+          <h2 className='font-bold text-4xl w-full'>Internship Program</h2>
+          <p className=''>Shape your future with QUANTA</p>
         </div>
         <div className={styles.internshipContent}>
           <motion.div 
@@ -34,10 +37,10 @@ const Internship = () => {
               full-time company employee.
             </p>
             <ul className={styles.internshipFeatures}>
-              <li><i className="fas fa-check-circle"></i> Hands-on experience with real projects</li>
-              <li><i className="fas fa-check-circle"></i> Mentorship from industry experts</li>
-              <li><i className="fas fa-check-circle"></i> Potential for full-time employment</li>
-              <li><i className="fas fa-check-circle"></i> Cutting-edge technology stack</li>
+              <li><FontAwesomeIcon icon={faCheckCircle} className="text-[#8828A3] mr-2" /> Hands-on experience with real projects</li>
+              <li><FontAwesomeIcon icon={faCheckCircle} className="text-[#8828A3]  mr-2" /> Mentorship from industry experts</li>
+              <li><FontAwesomeIcon icon={faCheckCircle} className="text-[#8828A3]  mr-2" /> Potential for full-time employment</li>
+              <li><FontAwesomeIcon icon={faCheckCircle} className="text-[#8828A3]  mr-2" /> Cutting-edge technology stack</li>
             </ul>
             <div className={styles.internshipButtons}>
               <a href="internship.html" className={`${styles.btn} ${styles.btnPrimary}`}>

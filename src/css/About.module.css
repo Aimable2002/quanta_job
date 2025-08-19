@@ -1,6 +1,6 @@
 .about {
-    padding: 100px 0;
-    background-color: white;
+    padding: 10px 0;
+    background-color: #b1d7e8;
   }
   
   .aboutContent {
@@ -11,6 +11,10 @@
   
   .aboutText {
     flex: 1;
+  }
+
+  .sectionSubtitle {
+    padding-bottom: 3rem;
   }
   
   .aboutText h3 {

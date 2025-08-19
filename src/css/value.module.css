@@ -1,12 +1,14 @@
 .values {
-    padding: 100px 0;
-    background-color: #f9f9f9;
+    padding-left: 10%;
+    padding-right: 10%;
+    background-color: #b1d7e8;
   }
   
   .valuesGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 30px;
+    padding-top: 4rem;
   }
   
   .valueCard {

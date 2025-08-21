@@ -24,13 +24,6 @@ const servicesData: Service[] = [
   },
   {
     id: 4,
-    title: "Online Courses",
-    description: "Master future technologies with our expert-led programs.",
-    icon: "graduation-cap",
-    link: "https://forms.gle/1RqC3A2Ds4F9gqjT6"
-  },
-  {
-    id: 5,
     title: "AGI Research",
     description: "Pioneering the path to Artificial General Intelligence.",
     icon: "brain",

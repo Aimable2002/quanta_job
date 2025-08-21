@@ -1,13 +1,13 @@
 .services {
-    padding: 100px 0;
+    padding-left: 10%;
+    padding-right: 10%;
+    background-color: #e1effd;
   }
   
   .servicesContainer {
     position: relative;
     display: flex;
     align-items: center;
-    padding-left: 10%;
-    padding-right: 10%;
   }
   
   .servicesScroll {

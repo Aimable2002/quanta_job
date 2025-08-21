@@ -1,89 +1,20 @@
 @import "tailwindcss";
 
 :root {
-    --primary-color: #6e48aa;
-    --secondary-color: #9d50bb;
-    --accent-color: #4776E6;
-    --dark-color: #1a1a2e;
-    --light-color: #e1effd;
-    --text-color: #333;
-    --text-light: #666;
-    --white: #fff;
-    --black: #000;
-    --success-color: #4CAF50;
-    --warning-color: #FFC107;
-    --error-color: #F44336;
-    --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    --font-secondary: 'Arial', sans-serif;
-    --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    --transition: all 0.3s ease;
-  }
-  
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  html {
-    scroll-behavior: smooth;
-  }
-  
-  body {
-    font-family: var(--font-primary);
-    color: var(--text-color);
-    line-height: 1.6;
-    background-color: var(--light-color);
-    overflow-x: hidden;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 15px;
-    color: var(--dark-color);
-  }
-  
-  a {
-    text-decoration: none;
-    color: var(--primary-color);
-    transition: var(--transition);
-  }
-  
-  a:hover {
-    color: var(--secondary-color);
-  }
-  
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  .container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
-  }
-  
-  .section {
-    padding: 100px 0;
-  }
-  
-  @media (max-width: 768px) {
-    .section {
-      padding: 60px 0;
-    }
-    
-    h1 {
-      font-size: 2.5rem;
-    }
-    
-    h2 {
-      font-size: 2rem;
-    }
-    
-    h3 {
-      font-size: 1.5rem;
-    }
-  }
+  --primary-color: #6e48aa;
+  --secondary-color: #9d50bb;
+  --accent-color: #4776E6;
+  --dark-color: #1a1a2e;
+  --light-color: #e1effd;
+  --text-color: #333;
+  --text-light: #666;
+  --white: #fff;
+  --black: #000;
+  --success-color: #4CAF50;
+  --warning-color: #FFC107;
+  --error-color: #F44336;
+  --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-secondary: 'Arial', sans-serif;
+  --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}

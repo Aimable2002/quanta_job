@@ -9,7 +9,7 @@ const Internship = () => {
   return (
     <section className={styles.internship} id="internship">
       <div className={styles.container}>
-        <div className='flex flex-col text-center pb-100'>
+        <div className='flex flex-col text-center pb-10'>
           <h2 className='font-bold text-4xl w-full'>Internship Program</h2>
           <p className=''>Shape your future with QUANTA</p>
         </div>

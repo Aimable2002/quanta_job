@@ -1,4 +1,5 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import Header from './utils/Header';
 import Hero from './utils/Hero';
 import Products from './utils/Product';
@@ -15,35 +16,57 @@ import Contact from './pages/contact';
 import Services from './pages/service';
 import './index.css';
 import './css/animations.css';
+import { LeadershipTeam } from './pages/leadership';
+
+function ScrollToHash() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        // Small timeout to ensure the page has rendered
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, [location]);
+
+  return null;
+}
 
 function Home() {
   return (
     <>
-    <Header />
-    <main>
-      <Hero />
-      <About />
-      <Values />
-      <Products />
-      <Services />
-      <Internship />
-      <Testimonials />
-      <AffiliateCTA />
-      <Contact />
-    </main>
-    <Footer />
-    <Chatbot />
-  </>
+      <Header />
+      <main>
+        <Hero />
+        <About />
+        <Values />
+        <Products />
+        <Services />
+        <Internship />
+        <Testimonials />
+        <AffiliateCTA />
+        <Contact />
+      </main>
+      <Footer />
+      <Chatbot />
+    </>
   );
 }
 
 function App() {
   return (
     <div className="App">
+      <ScrollToHash />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/leader" element={<LeadershipTeam />} />
       </Routes>
     </div>
   );

@@ -6,10 +6,9 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className='mx-50'>
 
 <footer className={`${styles.footer} px-20`}>
-      <div className='container'> {/** className={styles.container}  removed*/}
+      <div className='container'> 
         <div className={styles.footerGrid}>
           {/* About Column */}
           <div className={`${styles.footerCol} ${styles.footerAbout}`}>
@@ -92,7 +91,6 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-    </div>
   );
 };
 

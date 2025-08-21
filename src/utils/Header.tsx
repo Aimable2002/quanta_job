@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import styles from '../css/Header.module.css'
-
 import logo from '../assets/quanta.png'
 
 const Header = () => {
   const [isActive, setIsActive] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState<boolean>(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,6 +22,23 @@ const Header = () => {
     setIsActive(!isActive);
   };
 
+  const handleNavClick = (path: string): void => {
+    setIsActive(false);
+    
+    // If we're not on the home page and it's a hash link, navigate home first
+    if (path.startsWith('#') && location.pathname !== '/') {
+      // Navigate to home page first, then scroll to section
+      window.location.href = `/${path}`;
+    } else if (path.startsWith('#')) {
+      // We're already on home page, just scroll to section
+      const sectionId = path.substring(1);
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '#about' },
@@ -30,6 +47,7 @@ const Header = () => {
     { name: 'Internship', path: 'https://forms.gle/1RqC3A2Ds4F9gqjT6', external: true },
     { name: 'Affiliate Program', path: '#internship' },
     { name: 'Contact Us', path: '#contact' },
+    { name: 'Leadership', path: '/leader' },
     { name: 'Admin', path: '/admin' }
   ];
 
@@ -47,11 +65,33 @@ const Header = () => {
               {navItems.map((item, index) => (
                 <li key={index} className={styles.navItem}>
                   {item.external ? (
-                    <a href={item.path} target="_blank" rel="noopener noreferrer">
+                    <a 
+                      href={item.path} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className={styles.navLink}
+                    >
+                      {item.name}
+                    </a>
+                  ) : item.path.startsWith('#') ? (
+                    <a 
+                      href={item.path} 
+                      className={styles.navLink}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleNavClick(item.path);
+                      }}
+                    >
                       {item.name}
                     </a>
                   ) : (
-                    <Link to={item.path}>{item.name}</Link>
+                    <Link 
+                      to={item.path} 
+                      className={styles.navLink}
+                      onClick={() => setIsActive(false)}
+                    >
+                      {item.name}
+                    </Link>
                   )}
                 </li>
               ))}

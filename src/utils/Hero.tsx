@@ -5,7 +5,7 @@ const Hero = () => {
   return (
     <section className={styles.hero} id="home">
       <div className={styles.heroOverlay}></div>
-      <div className={styles.container}>
+      <div className=' w-full'>
         <div className={styles.heroContent}>
           <motion.h1 
             className={styles.heroTitle}
@@ -37,7 +37,7 @@ const Hero = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Join Our Internship
+              Research & Innovation Program
             </a>
           </motion.div>
         </div>

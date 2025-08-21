@@ -19,7 +19,7 @@ const Contact = () => {
   };
 
   return (
-    <div className=" bg-[rgba(0,0,0,0.7)]">
+    <div className="px-[10%] bg-[rgba(0,0,0,0.7)]">
       <section className={`${styles.contact} px-20`} id="contact">
         <div className="container"> {/* Added wrapper */}
           <div className="flex text-center flex-col">

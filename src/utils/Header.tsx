@@ -60,6 +60,11 @@ const Header = () => {
             <span className={styles.quantaText}>QUANTA</span>
           </div>
 
+          {/* Hamburger button - placed outside the nav */}
+          <div className={styles.hamburger} onClick={toggleMenu}>
+            {isActive ? <FaTimes /> : <FaBars />}
+          </div>
+
           <nav className={`${styles.nav} ${isActive ? styles.active : ''}`}>
             <ul className={styles.navList}>
               {navItems.map((item, index) => (
@@ -70,6 +75,7 @@ const Header = () => {
                       target="_blank" 
                       rel="noopener noreferrer"
                       className={styles.navLink}
+                      onClick={() => setIsActive(false)}
                     >
                       {item.name}
                     </a>
@@ -96,9 +102,6 @@ const Header = () => {
                 </li>
               ))}
             </ul>
-            <div className={styles.hamburger} onClick={toggleMenu}>
-              {isActive ? <FaTimes /> : <FaBars />}
-            </div>
           </nav>
         </div>
       </div>

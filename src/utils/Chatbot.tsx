@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { FaRobot, FaMicrophone, FaPaperPlane, FaTimes } from 'react-icons/fa';
-// import { Message } from '../types';
 import type { Message } from '../types/type';
 import styles from '../css/Chatbot.module.css'
 
@@ -10,6 +9,26 @@ const Chatbot = () => {
   const [inputValue, setInputValue] = useState<string>('');
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Load messages from localStorage on component mount
+  useEffect(() => {
+    const savedMessages = localStorage.getItem('quanta_chat_history');
+    if (savedMessages) {
+      setMessages(JSON.parse(savedMessages));
+    } else {
+      // Initial bot message
+      setMessages([{
+        id: 1,
+        text: "Hello! I'm QUANTA Assistant. How can I help you today?",
+        sender: 'bot'
+      }]);
+    }
+  }, []);
+
+  // Save messages to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('quanta_chat_history', JSON.stringify(messages));
+  }, [messages]);
 
   const toggleChatbot = (): void => {
     setIsOpen(!isOpen);
@@ -42,15 +61,76 @@ const Chatbot = () => {
 
   const getBotResponse = (message: string): string => {
     const lowerMsg = message.toLowerCase();
-    if (lowerMsg.includes('hello') || lowerMsg.includes('hi')) {
-      return "Hello! How can I help you today?";
-    } else if (lowerMsg.includes('product') || lowerMsg.includes('service')) {
-      return "We offer various AI-powered products and services. You can explore them in our Products and Services sections.";
-    } else if (lowerMsg.includes('internship') || lowerMsg.includes('job')) {
-      return "We have an exciting internship program. You can apply through the link in our Internship section.";
+    
+    // Emotional responses first
+    const emotionalResponse = getEmotionalResponse(lowerMsg);
+    if (emotionalResponse) return emotionalResponse;
+    
+    // Training Q&A from the PDF
+    if (lowerMsg.includes('what is quanta') || lowerMsg.includes('about quanta')) {
+      return "QUANTA builds AI systems with a 100x mindset—fast, precise, and useful. We focus on real problems and ship improvements relentlessly.";
+    } else if (lowerMsg.includes('core values')) {
+      return "Empathy, Focus, Impute, Extreme Ownership, Future Obsession, Sacrificial Dedication, 100x Mindset, Intelligent Unity, Uncompromised Integrity, Built for Earth & Beyond.";
+    } else if (lowerMsg.includes('bill of company')) {
+      return "Here's the page: [Link to current Bill of Company]. (Content unchanged.)";
+    } else if (lowerMsg.includes('who leads') || lowerMsg.includes('leadership')) {
+      return "Meet our leadership team here: [Link to Leadership].";
+    } else if (lowerMsg.includes('online courses') || lowerMsg.includes('courses')) {
+      return "No. We don't offer courses. If you want to build and research with us, see our Research & Innovation Program: [Link].";
+    } else if (lowerMsg.includes('join') && lowerMsg.includes('research')) {
+      return "Email research@quanta-ai.xyz with your profile and a short proposal, or apply on the program page: [Link].";
+    } else if (lowerMsg.includes('internship') || lowerMsg.includes('apply for internship')) {
+      return "Yes, but internships are limited and secondary to research priorities. See details here: [Link to Internship/Opportunities].";
+    } else if (lowerMsg.includes('services')) {
+      return "[Keep your existing list, minus Online Courses]. For research collaboration, visit the Research & Innovation page.";
+    } else if (lowerMsg.includes('work so fast')) {
+      return "We move fast, break, learn, and fix—while holding high standards. Speed first; perfection iterates.";
+    } else if (lowerMsg.includes('partners') || lowerMsg.includes('contact')) {
+      return "partnerships@quanta-ai.xyz or the Contact page: [Link].";
+    } else if (lowerMsg.includes('press') || lowerMsg.includes('speaking')) {
+      return "press@quanta-ai.xyz.";
+    } else if (lowerMsg.includes('general') || lowerMsg.includes('inquiries')) {
+      return "info@quanta-ai.xyz.";
     } else {
       return "Thanks for your message! Our team will get back to you soon.";
     }
+  };
+
+  const getEmotionalResponse = (message: string): string | null => {
+    // Greetings
+    if (message.match(/^(hi|hello|hey|greetings|yo|sup|what's up|good day)[!,. ]*$/)) {
+      return "Hello! 👋 I'm QUANTA Assistant. How can I help you today?";
+    }
+    if (message.includes('good morning')) {
+      return "Good morning! Wishing you a productive and joyful day ahead.";
+    }
+    if (message.includes('good afternoon')) {
+      return "Good afternoon! Hope your day is going well.";
+    }
+    if (message.includes('good evening')) {
+      return "Good evening! How can I help you tonight?";
+    }
+    if (message.includes('good night')) {
+      return "Good night! Sleep well and dream big. See you soon!";
+    }
+    // Instructions/help
+    if (message.includes('help') || message.includes('instruction') || message.includes('how to') || message.includes('guide')) {
+      return "Here are some things you can ask me:\n\n- About QUANTA and our mission\n- Details about our services or products\n- How to apply for internships\n- Contact information\n- Or just say hi!";
+    }
+    // Emotional
+    if (message.includes('thank you') || message.includes('thanks')) {
+      return "You're welcome! 😊 If you have more questions, just ask.";
+    }
+    if (message.includes('love you')) {
+      return "Aww, thank you! I'm here to help you anytime ❤️";
+    }
+    if (message.includes('how are you')) {
+      return "I'm just code, but I'm always happy to help you! How are you?";
+    }
+    if (message.includes('goodbye') || message.includes('bye')) {
+      return "Goodbye! Have a wonderful day. If you need anything, I'm always here!";
+    }
+    return null;
   };
 
   const handleKeyPress = (e: React.KeyboardEvent): void => {
@@ -58,15 +138,6 @@ const Chatbot = () => {
       handleSendMessage();
     }
   };
-
-  useEffect(() => {
-    // Initial bot message
-    setMessages([{
-      id: 1,
-      text: "Hello! I'm QUANTA Assistant. How can I help you today?",
-      sender: 'bot'
-    }]);
-  }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });

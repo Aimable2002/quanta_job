@@ -1,0 +1,306 @@
+/* ResearchInnovation.module.css */
+.researchInnovation {
+    padding: 5rem 1rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e1effd 100%);
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #6e48aa, #9d50bb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .header p {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+  
+  .programOverview,
+  .targetAudience,
+  .tracks,
+  .deliverables,
+  .mentorship,
+  .ipPolicy,
+  .howWeWork,
+  .selectionCriteria,
+  .commitment,
+  .howToApply {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  }
+  
+  .programOverview h3,
+  .targetAudience h3,
+  .tracks h3,
+  .deliverables h3,
+  .mentorship h3,
+  .ipPolicy h3,
+  .howWeWork h3,
+  .selectionCriteria h3,
+  .commitment h3,
+  .howToApply h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #6e48aa;
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+  
+  .programOverview h3::after,
+  .targetAudience h3::after,
+  .tracks h3::after,
+  .deliverables h3::after,
+  .mentorship h3::after,
+  .ipPolicy h3::after,
+  .howWeWork h3::after,
+  .selectionCriteria h3::after,
+  .commitment h3::after,
+  .howToApply h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #6e48aa, #9d50bb);
+    border-radius: 3px;
+  }
+  
+  .programOverview p,
+  .targetAudience p,
+  .mentorship p,
+  .ipPolicy p,
+  .howWeWork p,
+  .commitment p,
+  .howToApply p {
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    color: #444;
+  }
+  
+  .tracks {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .track {
+    flex: 1;
+  }
+  
+  .track h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #6e48aa;
+  }
+  
+  .track ul,
+  .targetAudience ul,
+  .mentorship ul,
+  .ipPolicy ul,
+  .howWeWork ul,
+  .selectionCriteria ul,
+  .commitment ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .track li,
+  .targetAudience li,
+  .mentorship li,
+  .ipPolicy li,
+  .howWeWork li,
+  .selectionCriteria li,
+  .commitment li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: #555;
+  }
+  
+  .track li::before,
+  .targetAudience li::before,
+  .mentorship li::before,
+  .ipPolicy li::before,
+  .howWeWork li::before,
+  .selectionCriteria li::before,
+  .commitment li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #6e48aa;
+    font-weight: bold;
+  }
+  
+  .deliverableTypes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+  
+  .deliverableType {
+    flex: 1;
+    min-width: 280px;
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #6e48aa;
+  }
+  
+  .deliverableType h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #6e48aa;
+  }
+  
+  .deliverableType ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .deliverableType li {
+    padding: 0.3rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: #555;
+  }
+  
+  .deliverableType li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: #6e48aa;
+    font-weight: bold;
+  }
+  
+  .howToApply ol {
+    padding-left: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .howToApply li {
+    padding: 0.5rem 0;
+    color: #555;
+  }
+  
+  .ctaButtons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .primaryButton,
+  .secondaryButton {
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+  }
+  
+  .primaryButton {
+    background: linear-gradient(135deg, #6e48aa, #9d50bb);
+    color: white;
+    border: none;
+  }
+  
+  .primaryButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(110, 72, 170, 0.3);
+  }
+  
+  .secondaryButton {
+    background: transparent;
+    color: #6e48aa;
+    border: 2px solid #6e48aa;
+  }
+  
+  .secondaryButton:hover {
+    background: #6e48aa;
+    color: white;
+    transform: translateY(-2px);
+  }
+  
+  /* Responsive styles */
+  @media (min-width: 768px) {
+    .researchInnovation {
+      padding: 7rem 2rem;
+    }
+    
+    .tracks {
+      flex-direction: row;
+    }
+    
+    .deliverableTypes {
+      flex-direction: row;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .header h2 {
+      font-size: 2rem;
+    }
+    
+    .programOverview,
+    .targetAudience,
+    .tracks,
+    .deliverables,
+    .mentorship,
+    .ipPolicy,
+    .howWeWork,
+    .selectionCriteria,
+    .commitment,
+    .howToApply {
+      padding: 1.5rem;
+    }
+    
+    .programOverview h3,
+    .targetAudience h3,
+    .tracks h3,
+    .deliverables h3,
+    .mentorship h3,
+    .ipPolicy h3,
+    .howWeWork h3,
+    .selectionCriteria h3,
+    .commitment h3,
+    .howToApply h3 {
+      font-size: 1.5rem;
+    }
+    
+    .ctaButtons {
+      flex-direction: column;
+    }
+    
+    .primaryButton,
+    .secondaryButton {
+      width: 100%;
+    }
+  }

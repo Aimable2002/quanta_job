@@ -1,3 +1,4 @@
+// App.tsx (updated)
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Header from './utils/Header';
@@ -9,11 +10,13 @@ import { PrivacyPolicy } from './pages/privacy';
 import Footer from './pages/Footer';
 import About from './pages/About';
 import Values from './pages/Value';
-import Internship from './pages/internaship';
+import Opportunity from './pages/opportunity';
+import ResearchInnovation from './pages/research';
 import AffiliateCTA from './pages/Affiliated';
 import Testimonials from './pages/testimony';
 import Contact from './pages/contact';
 import Services from './pages/service';
+import Admin from './pages/Admin'; 
 import './index.css';
 import './css/animations.css';
 import { LeadershipTeam } from './pages/leadership';
@@ -26,7 +29,6 @@ function ScrollToHash() {
       const id = location.hash.replace('#', '');
       const element = document.getElementById(id);
       if (element) {
-        // Small timeout to ensure the page has rendered
         setTimeout(() => {
           element.scrollIntoView({ behavior: 'smooth' });
         }, 100);
@@ -47,7 +49,8 @@ function Home() {
         <Values />
         <Products />
         <Services />
-        <Internship />
+        <ResearchInnovation /> 
+        <Opportunity /> 
         <Testimonials />
         <AffiliateCTA />
         <Contact />
@@ -67,6 +70,7 @@ function App() {
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/leader" element={<LeadershipTeam />} />
+        {/* <Route path="/admin" element={<Admin />} />  */}
       </Routes>
     </div>
   );

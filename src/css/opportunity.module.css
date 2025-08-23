@@ -1,0 +1,361 @@
+/* Opportunity.module.css */
+.opportunity {
+    padding: 5rem 1rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e1effd 100%);
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #6e48aa, #9d50bb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .header p {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  
+  .content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .careers,
+  .internships {
+    flex: 1;
+    min-width: 300px;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  }
+  
+  .careers h3,
+  .internships h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #6e48aa;
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+  
+  .careers h3::after,
+  .internships h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #6e48aa, #9d50bb);
+    border-radius: 3px;
+  }
+  
+  .careers > p,
+  .internships > p {
+    color: #666;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+  
+  .jobListings {
+    margin-bottom: 1.5rem;
+  }
+  
+  .jobCard {
+    border: 1px solid #e1e8ed;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .jobCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-color: #6e48aa;
+  }
+  
+  .jobCard h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .jobDetails {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .jobDetails span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #666;
+    font-size: 0.9rem;
+  }
+  
+  .jobDetails svg {
+    color: #6e48aa;
+  }
+  
+  .applyButton {
+    background: linear-gradient(135deg, #6e48aa, #9d50bb);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .applyButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(110, 72, 170, 0.3);
+  }
+  
+  .viewAllButton {
+    background: transparent;
+    color: #6e48aa;
+    border: 2px solid #6e48aa;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+  }
+  
+  .viewAllButton:hover {
+    background: #6e48aa;
+    color: white;
+  }
+  
+  .internshipDetails {
+    margin-bottom: 1.5rem;
+  }
+  
+  .internshipDetails h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .detailItem {
+    display: flex;
+    margin-bottom: 0.8rem;
+  }
+  
+  .detailItem strong {
+    min-width: 100px;
+    color: #333;
+  }
+  
+  .detailItem span {
+    color: #666;
+  }
+  
+  .internshipButton {
+    background: linear-gradient(135deg, #6e48aa, #9d50bb);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+  
+  .internshipButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(110, 72, 170, 0.3);
+  }
+  
+  .whyQuanta {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #6e48aa;
+  }
+  
+  .whyQuanta h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .whyQuanta ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .whyQuanta li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: #555;
+  }
+  
+  .whyQuanta li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #6e48aa;
+    font-weight: bold;
+  }
+  
+  .whyQuanta svg {
+    color: #6e48aa;
+    margin-right: 0.5rem;
+  }
+  
+  .hiringProcess {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    margin-bottom: 2rem;
+  }
+  
+  .hiringProcess h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #6e48aa;
+    text-align: center;
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+  
+  .hiringProcess h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #6e48aa, #9d50bb);
+    border-radius: 3px;
+  }
+  
+  .processSteps {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+  
+  .step {
+    flex: 1;
+    min-width: 150px;
+    text-align: center;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-top: 4px solid #6e48aa;
+  }
+  
+  .step span {
+    display: block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background: linear-gradient(135deg, #6e48aa, #9d50bb);
+    color: white;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  
+  .step p {
+    color: #333;
+    font-weight: 600;
+  }
+  
+  .internshipInfo {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    text-align: center;
+  }
+  
+  .internshipInfo h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #6e48aa;
+  }
+  
+  .internshipInfo p {
+    color: #666;
+    line-height: 1.6;
+  }
+  
+  /* Responsive styles */
+  @media (min-width: 768px) {
+    .opportunity {
+      padding: 7rem 2rem;
+    }
+    
+    .content {
+      flex-direction: row;
+    }
+    
+    .processSteps {
+      flex-direction: row;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .header h2 {
+      font-size: 2rem;
+    }
+    
+    .careers,
+    .internships {
+      padding: 1.5rem;
+    }
+    
+    .careers h3,
+    .internships h3 {
+      font-size: 1.5rem;
+    }
+    
+    .jobDetails {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .processSteps {
+      flex-direction: column;
+    }
+    
+    .step {
+      min-width: 100%;
+    }
+  }

@@ -1,4 +1,4 @@
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -44,7 +44,7 @@ body::before {
         radial-gradient(circle at 80% 20%, rgba(157, 80, 187, 0.1) 0%, transparent 50%);
     z-index: -1;
     animation: backgroundFloat 20s ease-in-out infinite;
-}
+} */
 
 @keyframes backgroundFloat {
 

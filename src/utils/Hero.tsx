@@ -32,9 +32,8 @@ const Hero = () => {
             <a href="#products" className={`${styles.btn} ${styles.btnPrimary}`}>Explore Products</a>
             <a href="#services" className={`${styles.btn} ${styles.btnSecondary}`}>Explore Services</a>
             <a 
-              href="https://forms.gle/1RqC3A2Ds4F9gqjT6" 
+              href="#research-innovation" 
               className={`${styles.btn} ${styles.btnSecondary}`}
-              target="_blank"
               rel="noopener noreferrer"
             >
               Research & Innovation Program

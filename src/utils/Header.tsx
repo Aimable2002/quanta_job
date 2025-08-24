@@ -44,8 +44,8 @@ const Header = () => {
     { name: 'About', path: '#about' },
     { name: 'Our Services', path: '#services' },
     { name: 'Products', path: '#products' },
-    { name: 'Internship', path: 'https://forms.gle/1RqC3A2Ds4F9gqjT6', external: true },
-    { name: 'Affiliate Program', path: '#internship' },
+    { name: 'Opportunity', path: '#opportunity'},
+    { name: 'Support us', path: '#affiliate' },
     { name: 'Contact Us', path: '#contact' },
     { name: 'Leadership', path: '/leader' },
     { name: 'Admin', path: '/admin' }

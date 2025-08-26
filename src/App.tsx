@@ -70,7 +70,7 @@ function App() {
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/leader" element={<LeadershipTeam />} />
-        {/* <Route path="/admin" element={<Admin />} />  */}
+        <Route path="/admin" element={<Admin />} /> 
       </Routes>
     </div>
   );

@@ -43,4 +43,5 @@ export interface Value {
     id: number;
     text: string;
     sender: 'user' | 'bot';
+    isOptions?: boolean;
   }

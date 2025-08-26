@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { FaRobot, FaMicrophone, FaPaperPlane, FaTimes } from 'react-icons/fa';
 import type { Message } from '../types/type';
+// import styles from './Chatbot.module.css';
 import styles from '../css/Chatbot.module.css'
 
 const Chatbot = () => {
@@ -10,19 +11,26 @@ const Chatbot = () => {
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Load messages from localStorage on component mount
+  // Load messages from localStorage on component mount with guards
   useEffect(() => {
-    const savedMessages = localStorage.getItem('quanta_chat_history');
-    if (savedMessages) {
-      setMessages(JSON.parse(savedMessages));
-    } else {
-      // Initial bot message
-      setMessages([{
-        id: 1,
-        text: "Hello! I'm QUANTA Assistant. How can I help you today?",
-        sender: 'bot'
-      }]);
+    try {
+      const savedMessages = localStorage.getItem('quanta_chat_history');
+      if (savedMessages) {
+        const parsed = JSON.parse(savedMessages);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setMessages(parsed);
+          return;
+        }
+      }
+    } catch (_) {
+      // If JSON parse fails, fall back to initial message
     }
+    setMessages([{
+      id: 1,
+      text: "Welcome! 🌤 How can I assist you on your journey with QUANTA?",
+      sender: 'bot',
+      isOptions: true
+    }]);
   }, []);
 
   // Save messages to localStorage whenever they change
@@ -32,6 +40,19 @@ const Chatbot = () => {
 
   const toggleChatbot = (): void => {
     setIsOpen(!isOpen);
+  };
+
+  const resetConversation = (): void => {
+    const initial = [{
+      id: Date.now(),
+      text: "Welcome! 🌤 How can I assist you on your journey with QUANTA?",
+      sender: 'bot',
+      isOptions: true
+    } as Message];
+    setMessages(initial);
+    try {
+      localStorage.setItem('quanta_chat_history', JSON.stringify(initial));
+    } catch (_) {}
   };
 
   const handleSendMessage = (): void => {
@@ -66,33 +87,31 @@ const Chatbot = () => {
     const emotionalResponse = getEmotionalResponse(lowerMsg);
     if (emotionalResponse) return emotionalResponse;
     
-    // Training Q&A from the PDF
-    if (lowerMsg.includes('what is quanta') || lowerMsg.includes('about quanta')) {
-      return "QUANTA builds AI systems with a 100x mindset—fast, precise, and useful. We focus on real problems and ship improvements relentlessly.";
-    } else if (lowerMsg.includes('core values')) {
-      return "Empathy, Focus, Impute, Extreme Ownership, Future Obsession, Sacrificial Dedication, 100x Mindset, Intelligent Unity, Uncompromised Integrity, Built for Earth & Beyond.";
-    } else if (lowerMsg.includes('bill of company')) {
-      return "Here's the page: [Link to current Bill of Company]. (Content unchanged.)";
-    } else if (lowerMsg.includes('who leads') || lowerMsg.includes('leadership')) {
-      return "Meet our leadership team here: [Link to Leadership].";
-    } else if (lowerMsg.includes('online courses') || lowerMsg.includes('courses')) {
-      return "No. We don't offer courses. If you want to build and research with us, see our Research & Innovation Program: [Link].";
-    } else if (lowerMsg.includes('join') && lowerMsg.includes('research')) {
-      return "Email research@quanta-ai.xyz with your profile and a short proposal, or apply on the program page: [Link].";
-    } else if (lowerMsg.includes('internship') || lowerMsg.includes('apply for internship')) {
-      return "Yes, but internships are limited and secondary to research priorities. See details here: [Link to Internship/Opportunities].";
-    } else if (lowerMsg.includes('services')) {
-      return "[Keep your existing list, minus Online Courses]. For research collaboration, visit the Research & Innovation page.";
-    } else if (lowerMsg.includes('work so fast')) {
-      return "We move fast, break, learn, and fix—while holding high standards. Speed first; perfection iterates.";
-    } else if (lowerMsg.includes('partners') || lowerMsg.includes('contact')) {
-      return "partnerships@quanta-ai.xyz or the Contact page: [Link].";
-    } else if (lowerMsg.includes('press') || lowerMsg.includes('speaking')) {
-      return "press@quanta-ai.xyz.";
-    } else if (lowerMsg.includes('general') || lowerMsg.includes('inquiries')) {
-      return "info@quanta-ai.xyz.";
+    // Specific responses based on user query
+    if (lowerMsg.includes('about quanta') || lowerMsg.includes('what is quanta')) {
+      return "QUANTA is a pioneering AI technology company dedicated to advancing productivity, learning, and automation. We're committed to leading humanity into the next era of intelligence.";
+    } else if (lowerMsg.includes('ai products') || lowerMsg.includes('products')) {
+      return "Our AI products include intelligent assistants, automation tools, vision systems, and custom AI solutions tailored to business needs.";
+    } else if (lowerMsg.includes('team') || lowerMsg.includes('careers')) {
+      return "Our team consists of world-class professionals passionate about advancing technology. Visit our Careers page to learn about opportunities.";
+    } else if (lowerMsg.includes('internship')) {
+      return "We offer internship programs for students passionate about AI and technology. Apply through our Careers page to gain hands-on experience.";
+    } else if (lowerMsg.includes('contact') || lowerMsg.includes('demo')) {
+      return "You can contact us at contact@quanta.example or call +250 79 44 12 876. We're happy to schedule a demo of our solutions.";
+    } else if (lowerMsg.includes('client') || lowerMsg.includes('stories')) {
+      return "Our clients have achieved remarkable results with our AI solutions. 'QUANTA transformed our workflow efficiency by 40%' - Happy Client";
+    } else if (lowerMsg.includes('partnership')) {
+      return "We welcome partnerships with organizations that share our vision. Email partnerships@quanta.example to explore collaboration opportunities.";
+    } else if (lowerMsg.includes('get started')) {
+      return "To get started with QUANTA, contact our team for a consultation. We'll guide you through the implementation process step by step.";
+    } else if (lowerMsg.includes('course')) {
+      return "We offer training programs in AI, web development, and related fields. Check our Courses section for available programs.";
+    } else if (lowerMsg.includes('why choose') || lowerMsg.includes('why us')) {
+      return "We offer innovative solutions, expert team support, ethical AI development, and proven results. Our clients choose us for quality and reliability.";
+    } else if (lowerMsg.includes('privacy') || lowerMsg.includes('security')) {
+      return "We take data privacy and security seriously. We're fully compliant with GDPR and industry best practices to protect your information.";
     } else {
-      return "Thanks for your message! Our team will get back to you soon.";
+      return "I'd be happy to help you with that! Could you please provide more details about what you're looking for?";
     }
   };
 
@@ -139,6 +158,87 @@ const Chatbot = () => {
     }
   };
 
+  const renderOptionsPanel = () => {
+    const optionGroups = [
+      {
+        title: "About QUANTA",
+        options: [
+          { icon: '🏢', label: 'About QUANTA' },
+          { icon: '🤖', label: 'AI Products' },
+          { icon: '🧑‍💼', label: 'Team & Careers' },
+          { icon: '🎓', label: 'Internships' },
+          { icon: '📞', label: 'Contact & Demo' }
+        ]
+      },
+      {
+        title: "Client Stories",
+        options: [
+          { icon: '⭐', label: 'Client Stories' },
+          { icon: '🤝', label: 'Partnerships' },
+          { icon: '🚀', label: 'Get Started' },
+          { icon: '📚', label: 'Courses' },
+          { icon: '💡', label: 'Why Choose Us?' }
+        ]
+      },
+      {
+        title: "Privacy & Security",
+        options: [
+          { icon: '🔒', label: 'Privacy & Security' }
+        ]
+      }
+    ];
+
+    return (
+      <div className={styles.chatbotOptionsPanel}>
+        <div className={styles.optionsHeader}>
+          <span>✨ Explore QUANTA:</span>
+        </div>
+        
+        <div className={styles.optionsColumns}>
+          {optionGroups.map((group, groupIndex) => (
+            <div key={groupIndex} className={styles.optionColumn}>
+              <h4 className={styles.columnTitle}>{group.title}</h4>
+              <div className={styles.columnOptions}>
+                {group.options.map((option, optionIndex) => (
+                  <button
+                    key={optionIndex}
+                    className={styles.optionButton}
+                    onClick={() => handleSendOption(option.label)}
+                  >
+                    <span className={styles.optionIcon}>{option.icon}</span>
+                    <span className={styles.optionLabel}>{option.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  const handleSendOption = (option: string) => {
+    const userMessage: Message = {
+      id: Date.now(),
+      text: option,
+      sender: 'user'
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setIsTyping(true);
+
+    // Simulate bot response
+    setTimeout(() => {
+      const botMessage: Message = {
+        id: Date.now() + 1,
+        text: getBotResponse(option),
+        sender: 'bot'
+      };
+      setMessages(prev => [...prev, botMessage]);
+      setIsTyping(false);
+    }, 1000);
+  };
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping]);
@@ -149,6 +249,14 @@ const Chatbot = () => {
         <div className={styles.chatbotHeader}>
           <span className={styles.chatbotHeaderIcon}>🤖</span>
           <span>QUANTA <span style={{fontWeight:400}}>Assistant</span></span>
+          <div>
+            <button
+              className={styles.chatbotReset}
+              onClick={resetConversation}
+              aria-label="Reset conversation"
+            >
+              Reset
+            </button>
           <button 
             className={styles.chatbotClose} 
             onClick={toggleChatbot}
@@ -156,6 +264,7 @@ const Chatbot = () => {
           >
             <FaTimes />
           </button>
+          </div>
         </div>
         <div className={styles.chatbotMessages}>
           {messages.map(message => (
@@ -166,6 +275,7 @@ const Chatbot = () => {
               }`}
             >
               {message.text}
+              {message.isOptions && renderOptionsPanel()}
             </div>
           ))}
           {isTyping && (

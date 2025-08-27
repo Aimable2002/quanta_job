@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // Handle login at POST /admin
-const pool = require('./db');
+const pool = require('./db/db');
 app.post('/admin', (req, res) => {
     const { username, password } = req.body;
     // Replace this with real authentication logic
@@ -28,8 +28,8 @@ app.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/admin.html'));
 });
 
-const contactRoutes = require('./routes/contact');
-const adminRoutes = require('./routes/admin');
+const contactRoutes = require('./router/contact');
+const adminRoutes = require('./router/admin');
 
 app.use('/api/contact', contactRoutes);
 app.use('/api/admin', adminRoutes);
@@ -43,7 +43,7 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
     console.log(`🚀 Server is running on http://localhost:${PORT}`);
 });

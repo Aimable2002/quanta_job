@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import styles from '../css/Admin.module.css';
-import '@fortawesome/fontawesome-svg-core/styles.css'; // Add this for icons
+import styles from '../css/Admin.module.css'
+import logo from '../assets/quanta.png'
+import { BiLogOutCircle } from 'react-icons/bi';
 
 interface Contact {
   id: number;
@@ -11,7 +12,7 @@ interface Contact {
 }
 
 const Admin = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Fixed to false
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -26,12 +27,13 @@ const Admin = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (username === 'admin' && password === 'password') {
+    if (username === 'admin' && password === 'root') {
       setIsLoggedIn(true);
       setError('');
-      // TODO: Fetch contacts from backend API
       setContacts([
         { id: 1, name: 'John Doe', email: 'john@example.com', message: 'Test message', date: '2025-08-27' },
+        { id: 2, name: 'Jane Smith', email: 'jane@example.com', message: 'Another test message', date: '2025-08-27' },
+        { id: 3, name: 'Bob Johnson', email: 'bob@example.com', message: 'Product inquiry', date: '2025-08-26' },
       ]);
     } else {
       setError('Invalid username or password');
@@ -50,7 +52,6 @@ const Admin = () => {
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
-    // TODO: Filter contacts based on searchQuery
   };
 
   const handleSelectContact = (id: number) => {
@@ -60,14 +61,12 @@ const Admin = () => {
   };
 
   const handleDeleteSelected = () => {
-    // TODO: API call
     setContacts((prev) => prev.filter((contact) => !selectedContacts.includes(contact.id)));
     setSelectedContacts([]);
     setShowDeleteSelectedModal(false);
   };
 
   const handleClearAll = () => {
-    // TODO: API call
     setContacts([]);
     setSelectedContacts([]);
     setShowClearModal(false);
@@ -131,9 +130,9 @@ const Admin = () => {
     );
   }
 
-  // Calculate stats (today is 2025-08-27, so sample data matches today/this week)
+  // Calculate stats
   const totalContacts = contacts.length;
-  const today = new Date().toISOString().split('T')[0]; // '2025-08-27'
+  const today = new Date().toISOString().split('T')[0];
   const todayContacts = contacts.filter((contact) => contact.date === today).length;
   const weekStart = new Date();
   weekStart.setDate(weekStart.getDate() - 7);
@@ -142,18 +141,17 @@ const Admin = () => {
   return (
     <>
       <div className={styles['dashboard-container']} id="dashboardContainer">
-        <div
-          className={styles['dashboard-header']}
-          style={{ display: 'flex', alignItems: 'center', gap: '12px' }}
-        >
-          <img
-            src="image/quanta.png"
-            alt="Quanta Logo"
-            style={{ height: '40px', width: 'auto', verticalAlign: 'middle' }}
-          />
-          <h1>
-            <i className="fas fa-tachometer-alt"></i> Admin Dashboard
-          </h1>
+        <div className={styles['dashboard-header']}>
+          <div className={styles['logo-container']}>
+            <img
+              src={logo}
+              alt="Quanta Logo"
+              className={styles.logo}
+            />
+            <h1>
+              <i className="fas fa-tachometer-alt"></i> Admin Dashboard
+            </h1>
+          </div>
           <button className={styles['logout-btn']} id="logoutBtn" onClick={handleLogout}>
             <i className="fas fa-sign-out-alt"></i> Logout
           </button>
@@ -209,7 +207,7 @@ const Admin = () => {
             {contacts.length === 0 ? (
               <div className={styles.loading}>No contacts available</div>
             ) : (
-              <table className={styles['contacts-data-table']}> {/* Added table for CSS compatibility */}
+              <table className={styles['contacts-data-table']}>
                 <thead>
                   <tr>
                     <th>Select</th>

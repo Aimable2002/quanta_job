@@ -44,7 +44,7 @@ const Header = () => {
     { name: 'About', path: '#about' },
     { name: 'Our Services', path: '#services' },
     { name: 'Products', path: '#products' },
-    { name: 'Opportunity', path: '#opportunity'},
+    { name: 'Opportunity', path: '/oppo'},
     { name: 'Support us', path: '#affiliate' },
     { name: 'Contact Us', path: '#contact' },
     { name: 'Leadership', path: '/leader' },

@@ -32,7 +32,7 @@ const Hero = () => {
             <a href="#products" className={`${styles.btn} ${styles.btnPrimary}`}>Explore Products</a>
             <a href="#services" className={`${styles.btn} ${styles.btnSecondary}`}>Explore Services</a>
             <a 
-              href="#research-innovation" 
+              href="/research" 
               className={`${styles.btn} ${styles.btnSecondary}`}
               rel="noopener noreferrer"
             >

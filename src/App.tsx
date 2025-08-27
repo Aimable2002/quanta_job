@@ -10,7 +10,6 @@ import { PrivacyPolicy } from './pages/privacy';
 import Footer from './pages/Footer';
 import About from './pages/About';
 import Values from './pages/Value';
-import Opportunity from './pages/opportunity';
 import ResearchInnovation from './pages/research';
 import AffiliateCTA from './pages/Affiliated';
 import Testimonials from './pages/testimony';
@@ -20,6 +19,7 @@ import Admin from './pages/Admin';
 import './index.css';
 import './css/animations.css';
 import { LeadershipTeam } from './pages/leadership';
+import Opportunity from './pages/opportunity';
 
 function ScrollToHash() {
   const location = useLocation();
@@ -49,8 +49,8 @@ function Home() {
         <Values />
         <Products />
         <Services />
-        <ResearchInnovation /> 
-        <Opportunity /> 
+        {/* <ResearchInnovation />  */}
+        {/* <Opportunity />  */}
         <Testimonials />
         <AffiliateCTA />
         <Contact />
@@ -61,6 +61,31 @@ function Home() {
   );
 }
 
+function Research() {
+  return(
+    <>
+      <Header />
+      <main>
+        <ResearchInnovation /> 
+      </main>
+      <Footer />
+      <Chatbot />
+    </>
+  )
+}
+
+function Opport() {
+  return(
+    <>
+      <Header />
+      <main>
+        <Opportunity /> 
+      </main>
+      <Footer />
+      <Chatbot />
+    </>
+  )
+}
 function App() {
   return (
     <div className="App">
@@ -71,6 +96,8 @@ function App() {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/leader" element={<LeadershipTeam />} />
         <Route path="/admin" element={<Admin />} /> 
+        <Route path='/research' element={<Research />} />
+        <Route path='/oppo' element={<Opport />} />
       </Routes>
     </div>
   );

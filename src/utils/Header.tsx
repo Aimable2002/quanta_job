@@ -67,7 +67,7 @@ const Header = () => {
 
           <nav className={`${styles.nav} ${isActive ? styles.active : ''}`}>
             <ul className={styles.navList}>
-              {navItems.map((item, index) => (
+              {/* {navItems.map((item, index) => (
                 <li key={index} className={styles.navItem}>
                   {item.external ? (
                     <a 
@@ -100,7 +100,32 @@ const Header = () => {
                     </Link>
                   )}
                 </li>
-              ))}
+              ))} */}
+              {navItems.map((item, index) => (
+  <li key={index} className={styles.navItem}>
+    {item.path.startsWith('#') ? (
+      <a 
+        href={item.path} 
+        className={styles.navLink}
+        onClick={(e) => {
+          e.preventDefault();
+          handleNavClick(item.path);
+        }}
+      >
+        {item.name}
+      </a>
+    ) : (
+      <Link 
+        to={item.path} 
+        className={styles.navLink}
+        onClick={() => setIsActive(false)}
+      >
+        {item.name}
+      </Link>
+    )}
+  </li>
+))}
+
             </ul>
           </nav>
         </div>

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styles from '../css/Admin.module.css'
 import logo from '../assets/quanta.png'
-import { BiLogOutCircle } from 'react-icons/bi';
 
 interface Contact {
   id: number;

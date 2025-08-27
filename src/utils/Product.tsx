@@ -1,24 +1,24 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import { FaChevronLeft, FaChevronRight, FaStar, FaDownload } from 'react-icons/fa';
 import type { Product } from '../types/type';
 import productsData from '../decla/product';
 import styles from '../css/Product.module.css'
 
 const Products = () => {
-  const [scrollPosition, setScrollPosition] = useState<number>(0);
+  // const [scrollPosition, setScrollPosition] = useState<number>(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = (): void => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollLeft -= 300;
-      setScrollPosition(scrollContainerRef.current.scrollLeft);
+      // setScrollPosition(scrollContainerRef.current.scrollLeft);
     }
   };
 
   const scrollRight = (): void => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollLeft += 300;
-      setScrollPosition(scrollContainerRef.current.scrollLeft);
+      // setScrollPosition(scrollContainerRef.current.scrollLeft);
     }
   }
 

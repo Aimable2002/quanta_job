@@ -1,44 +1,28 @@
-const express = require('express');
-const cors = require('cors');
-const morgan = require('morgan');
-const path = require('path');
-require('dotenv').config();
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import connectDB from "./db/db.js";
+import authRoutes from './router/auth.js'
+import contactRoutes from './router/contact.js'
+
+dotenv.config();
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(morgan('dev'));
 
-// PostgreSQL pool
-const pool = require('./db/db');
-
-// Login Route
-app.post('/admin', (req, res) => {
-    const { username, password } = req.body;
-    if (username === 'quanta' && password === 'quanta admin') {
-        res.json({ success: true, token: 'dummy-token', user: { username: 'admin' } });
-    } else {
-        res.status(401).json({ success: false, message: 'Invalid credentials' });
-    }
+// Add error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something went wrong!' });
 });
 
-// API Routes
-const contactRoutes = require('./router/contact');
-const adminRoutes = require('./router/admin');
+app.use('/api/auth', authRoutes);
 app.use('/api/contact', contactRoutes);
-app.use('/api/admin', adminRoutes);
 
-// 👉 Serve Vite build (from react_project/dist/)
-app.use(express.static(path.join(__dirname, '../dist')));
-
-// 👉 Handle direct URL access (SPA fallback to index.html)
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/index.html'));
-});
-
-// Start server
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`🚀 Server running at http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
+    connectDB();
 });

@@ -1,4 +1,3 @@
-// App.tsx (updated)
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Header from './utils/Header';
@@ -20,6 +19,11 @@ import './index.css';
 import './css/animations.css';
 import { LeadershipTeam } from './pages/leadership';
 import Opportunity from './pages/opportunity';
+// Import the new pages
+import GdprCompliance from './pages/GdprCompliance';
+import Security from './pages/Security';
+import CookiePolicy from './pages/CookiePolicy';
+import LegalNotice from './pages/LegalNotice';
 
 function ScrollToHash() {
   const location = useLocation();
@@ -49,8 +53,6 @@ function Home() {
         <Values />
         <Products />
         <Services />
-        {/* <ResearchInnovation />  */}
-        {/* <Opportunity />  */}
         <Testimonials />
         <AffiliateCTA />
         <Contact />
@@ -86,6 +88,7 @@ function Opport() {
     </>
   )
 }
+
 function App() {
   return (
     <div className="App">
@@ -98,6 +101,11 @@ function App() {
         <Route path="/admin" element={<Admin />} /> 
         <Route path='/research' element={<Research />} />
         <Route path='/oppo' element={<Opport />} />
+        {/* Add new routes for the legal pages */}
+        <Route path="/gdpr" element={<GdprCompliance />} />
+        <Route path="/security" element={<Security />} />
+        <Route path="/cookie-policy" element={<CookiePolicy />} />
+        <Route path="/legal-notice" element={<LegalNotice />} />
       </Routes>
     </div>
   );

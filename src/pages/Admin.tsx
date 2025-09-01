@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import styles from '../css/Admin.module.css'
-import logo from '../assets/quanta.png'
+import { useState, useEffect } from 'react';
+import styles from '../css/Admin.module.css';
+import logo from '../assets/quanta.png';
 
 interface Contact {
-  id: number;
+  _id: string;
   name: string;
   email: string;
+  subject: string;
   message: string;
   date: string;
 }
@@ -17,27 +18,134 @@ const Admin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [contacts, setContacts] = useState<Contact[]>([]);
-  const [selectedContacts, setSelectedContacts] = useState<number[]>([]);
+  const [selectedContacts, setSelectedContacts] = useState<string[]>([]);
   const [showClearModal, setShowClearModal] = useState(false);
   const [showDeleteSelectedModal, setShowDeleteSelectedModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [errorText, setErrorText] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRegistering, setIsRegistering] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const API_BASE = 'http://localhost:5000';
+
+  useEffect(() => {
+    if (token) {
+      verifyToken();
+    }
+  }, [token]);
+
+  const verifyToken = async () => {
+    try {
+      console.log('Verifying token:', token ? 'Token exists' : 'No token');
+      
+      const response = await fetch(`${API_BASE}/api/auth/verify`, {
+        headers: {
+          'x-auth-token': token || '',
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      console.log('Token verification response:', response.status);
+      
+      if (response.ok) {
+        console.log('Token verified successfully');
+        setIsLoggedIn(true);
+        await fetchContacts();
+      } else {
+        console.log('Token verification failed, clearing token');
+        localStorage.removeItem('token');
+        setToken(null);
+        setIsLoggedIn(false);
+      }
+    } catch (err) {
+      console.error('Token verification failed:', err);
+      localStorage.removeItem('token');
+      setToken(null);
+      setIsLoggedIn(false);
+    }
+  };
+
+  const fetchContacts = async () => {
+    try {
+      setIsLoading(true);
+      console.log('Fetching contacts with token:', token ? 'Token exists' : 'No token');
+      
+      if (!token) {
+        console.log('No token available, cannot fetch contacts');
+        setError('Authentication required');
+        return;
+      }
+      
+      const response = await fetch(`${API_BASE}/api/contact`, {
+        headers: {
+          'x-auth-token': token,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      console.log('Contacts fetch response status:', response.status);
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Contacts fetched successfully:', data);
+        setContacts(data);
+        setError(''); // Clear any previous errors
+      } else if (response.status === 401) {
+        console.log('Unauthorized, clearing token');
+        localStorage.removeItem('token');
+        setToken(null);
+        setIsLoggedIn(false);
+        setError('Session expired. Please login again.');
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Failed to fetch contacts:', response.status, errorData);
+        setError(`Failed to fetch contacts: ${errorData.message || 'Unknown error'}`);
+      }
+    } catch (err) {
+      console.error('Error fetching contacts:', err);
+      setError('Network error while fetching contacts');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (username === 'admin' && password === 'root') {
-      setIsLoggedIn(true);
-      setError('');
-      setContacts([
-        { id: 1, name: 'John Doe', email: 'john@example.com', message: 'Test message', date: '2025-08-27' },
-        { id: 2, name: 'Jane Smith', email: 'jane@example.com', message: 'Another test message', date: '2025-08-27' },
-        { id: 3, name: 'Bob Johnson', email: 'bob@example.com', message: 'Product inquiry', date: '2025-08-26' },
-      ]);
-    } else {
-      setError('Invalid username or password');
-      setErrorText('Invalid username or password. Please check your credentials and try again.');
+    try {
+      setIsLoading(true);
+      const endpoint = isRegistering ? '/api/auth/register' : '/api/auth/login';
+      
+      const response = await fetch(`${API_BASE}${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+      
+      const data = await response.json();
+      
+             if (response.ok) {
+         console.log('Login/Register successful, setting token');
+         setIsLoggedIn(true);
+         setError('');
+         setToken(data.token);
+         localStorage.setItem('token', data.token);
+         await fetchContacts(); // Wait for contacts to load
+       } else {
+         const errorMessage = data.message || (isRegistering ? 'Registration failed' : 'Invalid username or password');
+         setError(errorMessage);
+         setErrorText(errorMessage);
+         setShowErrorModal(true);
+       }
+    } catch (err) {
+      setError(isRegistering ? 'Registration failed' : 'Login failed');
+      setErrorText(isRegistering ? 'Registration failed. Please try again.' : 'Login failed. Please try again.');
       setShowErrorModal(true);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -47,40 +155,148 @@ const Admin = () => {
     setPassword('');
     setContacts([]);
     setSelectedContacts([]);
+    setToken(null);
+    localStorage.removeItem('token');
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
-  const handleSelectContact = (id: number) => {
+  const handleSelectContact = (id: string) => {
     setSelectedContacts((prev) =>
       prev.includes(id) ? prev.filter((contactId) => contactId !== id) : [...prev, id]
     );
   };
 
-  const handleDeleteSelected = () => {
-    setContacts((prev) => prev.filter((contact) => !selectedContacts.includes(contact.id)));
-    setSelectedContacts([]);
-    setShowDeleteSelectedModal(false);
+    const handleDeleteSelected = async () => {
+    try {
+      setIsLoading(true);
+      console.log('Deleting selected contacts:', selectedContacts);
+      
+      // Delete each selected contact
+      const deletePromises = selectedContacts.map(async (id) => {
+        const response = await fetch(`${API_BASE}/api/contact/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'x-auth-token': token || '',
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(`Failed to delete contact ${id}: ${response.status} - ${errorData.message || 'Unknown error'}`);
+        }
+        
+        const result = await response.json();
+        console.log(`Contact ${id} deleted successfully:`, result);
+        return result;
+      });
+      
+      await Promise.all(deletePromises);
+      console.log('All selected contacts deleted successfully');
+      
+      // Refresh contacts
+      await fetchContacts();
+      setSelectedContacts([]);
+      setShowDeleteSelectedModal(false);
+      
+      // Show success message
+      setError(''); // Clear any previous errors
+    } catch (err) {
+      console.error('Error deleting contacts:', err);
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+      setError(`Failed to delete some contacts: ${errorMessage}`);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleClearAll = () => {
-    setContacts([]);
-    setSelectedContacts([]);
-    setShowClearModal(false);
+  const handleClearAll = async () => {
+    try {
+      setIsLoading(true);
+      console.log('Clearing all contacts');
+      
+      const response = await fetch(`${API_BASE}/api/contact`, {
+        method: 'DELETE',
+        headers: {
+          'x-auth-token': token || '',
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(`Failed to clear contacts: ${response.status} - ${errorData.message || 'Unknown error'}`);
+      }
+      
+      const result = await response.json();
+      console.log('Clear all result:', result);
+      
+      // Refresh contacts
+      await fetchContacts();
+      setSelectedContacts([]);
+      setShowClearModal(false);
+      
+      // Show success message
+      setError(''); // Clear any previous errors
+    } catch (err) {
+      console.error('Error clearing contacts:', err);
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+      setError(`Failed to clear all contacts: ${errorMessage}`);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleExportContacts = () => {
-    const csv = contacts.map((contact) => `${contact.id},${contact.name},${contact.email},${contact.message},${contact.date}`).join('\n');
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'contacts.csv';
-    a.click();
-    URL.revokeObjectURL(url);
+    try {
+      if (contacts.length === 0) {
+        setError('No contacts to export');
+        return;
+      }
+      
+      // Create CSV header
+      const headers = ['ID', 'Name', 'Email', 'Subject', 'Message', 'Date'];
+      
+      // Create CSV content with proper escaping
+      const csvContent = [
+        headers.join(','),
+        ...contacts.map((contact) => [
+          contact._id,
+          `"${contact.name.replace(/"/g, '""')}"`,
+          `"${contact.email.replace(/"/g, '""')}"`,
+          `"${(contact.subject || '').replace(/"/g, '""')}"`,
+          `"${contact.message.replace(/"/g, '""')}"`,
+          new Date(contact.date).toLocaleString()
+        ].join(','))
+      ].join('\n');
+      
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `contacts_${new Date().toISOString().split('T')[0]}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      console.log('Contacts exported successfully');
+    } catch (err) {
+      console.error('Error exporting contacts:', err);
+      setError('Failed to export contacts');
+    }
   };
+
+  // Filter contacts based on search query
+  const filteredContacts = contacts.filter(contact => 
+    contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    contact.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    contact.message.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    contact.subject.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   if (!isLoggedIn) {
     return (
@@ -88,9 +304,9 @@ const Admin = () => {
         <div className={styles['login-box']}>
           <div className={styles['login-header']}>
             <h1>
-              <i className="fas fa-shield-alt"></i> Admin Login
+              <i className="fas fa-shield-alt"></i> {isRegistering ? 'Admin Registration' : 'Admin Login'}
             </h1>
-            <p>Access the admin dashboard</p>
+            <p>{isRegistering ? 'Create an admin account' : 'Access the admin dashboard'}</p>
           </div>
           <form className={styles['login-form']} onSubmit={handleLogin}>
             <div className={styles['form-group']}>
@@ -119,9 +335,22 @@ const Admin = () => {
                 ></i>
               </div>
             </div>
-            <button type="submit" className={styles['login-btn']}>
-              <i className="fas fa-sign-in-alt"></i> Login
+            <button type="submit" className={styles['login-btn']} disabled={isLoading}>
+              <i className="fas fa-sign-in-alt"></i> {isLoading ? (isRegistering ? 'Registering...' : 'Logging in...') : (isRegistering ? 'Register' : 'Login')}
             </button>
+            
+            <div className={styles['toggle-register']}>
+              <p>
+                {isRegistering ? 'Already have an account?' : "Don't have an account?"}{' '}
+                <span 
+                  onClick={() => setIsRegistering(!isRegistering)}
+                  className={styles['toggle-link']}
+                >
+                  {isRegistering ? 'Login here' : 'Register here'}
+                </span>
+              </p>
+            </div>
+            
             {error && <div className={styles['error-message']}>{error}</div>}
           </form>
         </div>
@@ -132,10 +361,25 @@ const Admin = () => {
   // Calculate stats
   const totalContacts = contacts.length;
   const today = new Date().toISOString().split('T')[0];
-  const todayContacts = contacts.filter((contact) => contact.date === today).length;
+  const todayContacts = contacts.filter((contact) => {
+    try {
+      return contact.date.split('T')[0] === today;
+    } catch (err) {
+      console.error('Error parsing date for contact:', contact._id, contact.date);
+      return false;
+    }
+  }).length;
+  
   const weekStart = new Date();
   weekStart.setDate(weekStart.getDate() - 7);
-  const weekContacts = contacts.filter((contact) => new Date(contact.date) >= weekStart).length;
+  const weekContacts = contacts.filter((contact) => {
+    try {
+      return new Date(contact.date) >= weekStart;
+    } catch (err) {
+      console.error('Error parsing date for contact:', contact._id, contact.date);
+      return false;
+    }
+  }).length;
 
   return (
     <>
@@ -156,18 +400,38 @@ const Admin = () => {
           </button>
         </div>
 
+        {error && (
+          <div className={styles['error-banner']}>
+            <i className="fas fa-exclamation-triangle"></i>
+            <span>{error}</span>
+            <button onClick={() => setError('')} className={styles['error-close']}>
+              <i className="fas fa-times"></i>
+            </button>
+          </div>
+        )}
+        
+        {!isLoggedIn && (
+          <div className={styles['info-banner']}>
+            <i className="fas fa-info-circle"></i>
+            <span>Please login to access the admin dashboard</span>
+          </div>
+        )}
+        
         <div className={styles['stats-container']}>
           <div className={styles['stat-card']}>
             <h3 id="totalContacts">{totalContacts}</h3>
             <p>Total Contacts</p>
+            {totalContacts === 0 && <small className={styles['stat-hint']}>No submissions yet</small>}
           </div>
           <div className={styles['stat-card']}>
             <h3 id="todayContacts">{todayContacts}</h3>
             <p>Today's Contacts</p>
+            {todayContacts === 0 && <small className={styles['stat-hint']}>No submissions today</small>}
           </div>
           <div className={styles['stat-card']}>
             <h3 id="weekContacts">{weekContacts}</h3>
             <p>This Week</p>
+            {weekContacts === 0 && <small className={styles['stat-hint']}>No submissions this week</small>}
           </div>
         </div>
 
@@ -189,51 +453,77 @@ const Admin = () => {
                 className={styles['delete-selected-btn']}
                 id="deleteSelectedBtn"
                 onClick={() => setShowDeleteSelectedModal(true)}
-                disabled={selectedContacts.length === 0}
+                disabled={selectedContacts.length === 0 || isLoading}
               >
                 <i className="fas fa-trash-alt"></i> Delete Selected (
                 <span id="selectedCount">{selectedContacts.length}</span>)
               </button>
-              <button className={styles['export-btn']} onClick={handleExportContacts}>
+              <button className={styles['export-btn']} onClick={handleExportContacts} disabled={isLoading}>
                 <i className="fas fa-download"></i> Export CSV
               </button>
-              <button className={styles['clear-btn']} onClick={() => setShowClearModal(true)}>
+              <button className={styles['clear-btn']} onClick={() => setShowClearModal(true)} disabled={isLoading}>
                 <i className="fas fa-trash-alt"></i> Clear All
               </button>
             </div>
           </div>
           <div className={styles['contacts-list']} id="contactsList">
-            {contacts.length === 0 ? (
-              <div className={styles.loading}>No contacts available</div>
+            {isLoading ? (
+              <div className={styles.loading}>
+                <i className="fas fa-spinner fa-spin"></i>
+                Loading contacts...
+              </div>
+                         ) : filteredContacts.length === 0 ? (
+               <div className={styles['no-contacts']}>
+                 <i className="fas fa-inbox"></i>
+                 <p>No contacts available</p>
+                 {contacts.length === 0 ? (
+                   <small>No contact submissions yet. Try submitting a contact form to see data here.</small>
+                 ) : (
+                   <small>No contacts match your search criteria.</small>
+                 )}
+               </div>
             ) : (
-              <table className={styles['contacts-data-table']}>
-                <thead>
-                  <tr>
-                    <th>Select</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Message</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {contacts.map((contact) => (
-                    <tr key={contact.id} className={styles['contact-item']}>
-                      <td>
-                        <input
-                          type="checkbox"
-                          checked={selectedContacts.includes(contact.id)}
-                          onChange={() => handleSelectContact(contact.id)}
-                        />
-                      </td>
-                      <td>{contact.name}</td>
-                      <td>{contact.email}</td>
-                      <td>{contact.message}</td>
-                      <td>{contact.date}</td>
+              <div className={styles['table-container']}>
+                <table className={styles['contacts-data-table']}>
+                  <thead>
+                    <tr>
+                      <th>Select</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Subject</th>
+                      <th>Message</th>
+                      <th>Date</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {filteredContacts.map((contact) => (
+                      <tr key={contact._id} className={styles['contact-item']}>
+                        <td>
+                          <input
+                            type="checkbox"
+                            checked={selectedContacts.includes(contact._id)}
+                            onChange={() => handleSelectContact(contact._id)}
+                          />
+                        </td>
+                        <td className={styles['contact-name']}>{contact.name}</td>
+                        <td className={styles['contact-email']}>{contact.email}</td>
+                        <td className={styles['contact-subject']}>{contact.subject || '-'}</td>
+                        <td className={styles['contact-message']}>
+                          <div className={styles['message-preview']}>
+                            {contact.message.length > 50 
+                              ? `${contact.message.substring(0, 50)}...` 
+                              : contact.message
+                            }
+                          </div>
+                        </td>
+                        <td className={styles['contact-date']}>
+                          {new Date(contact.date).toLocaleDateString()}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
         </div>
@@ -274,11 +564,12 @@ const Admin = () => {
               <button
                 className={styles['clear-cancel-btn']}
                 onClick={() => setShowClearModal(false)}
+                disabled={isLoading}
               >
                 <i className="fas fa-times"></i> Cancel
               </button>
-              <button className={styles['clear-confirm-btn']} onClick={handleClearAll}>
-                <i className="fas fa-trash-alt"></i> Delete All
+              <button className={styles['clear-confirm-btn']} onClick={handleClearAll} disabled={isLoading}>
+                <i className="fas fa-trash-alt"></i> {isLoading ? 'Deleting...' : 'Delete All'}
               </button>
             </div>
           </div>
@@ -301,14 +592,16 @@ const Admin = () => {
               <button
                 className={styles['delete-selected-cancel-btn']}
                 onClick={() => setShowDeleteSelectedModal(false)}
+                disabled={isLoading}
               >
                 <i className="fas fa-times"></i> Cancel
               </button>
               <button
                 className={styles['delete-selected-confirm-btn']}
                 onClick={handleDeleteSelected}
+                disabled={isLoading}
               >
-                <i className="fas fa-trash-alt"></i> Delete Selected
+                <i className="fas fa-trash-alt"></i> {isLoading ? 'Deleting...' : 'Delete Selected'}
               </button>
             </div>
           </div>

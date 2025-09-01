@@ -1,19 +1,14 @@
-const { Pool } = require('pg');
+import mongoose from "mongoose";
 
-// The dotenv config is now handled in server.js, so it is not needed here
-// require('dotenv').config();
+const connectDB = async () => {
+  try {
+    const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/quanta";
+    await mongoose.connect(uri);
+    console.log("Connected to database");
+  } catch (err) {
+    console.error("Database connection error:", err);
+    process.exit(1);
+  }
+};
 
-console.log("🚀 POSTGRES_URL:", process.env.POSTGRES_URL); // This should now display a URL
-
-if (!process.env.POSTGRES_URL) {
-    throw new Error("❌ POSTGRES_URL is undefined! Check your .env file.");
-}
-
-const pool = new Pool({
-    connectionString: process.env.POSTGRES_URL,
-    ssl: {
-        rejectUnauthorized: false,
-    },
-});
-
-module.exports = pool;
+export default connectDB;

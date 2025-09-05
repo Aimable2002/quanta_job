@@ -28,7 +28,7 @@ const Admin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
 
-  const API_BASE = 'http://localhost:5000';
+  const API_BASE = 'https://quanta-job.onrender.com';
 
   useEffect(() => {
     if (token) {

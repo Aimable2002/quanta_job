@@ -7,8 +7,8 @@ const About = () => {
   return (
     <section className={styles.about} id="about" style={{paddingLeft: '10%', paddingRight: '10%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
       <div className=''>
-        <div className='flex flex-col text-center'>
-          <h2 className='font-bold text-4xl w-full'>Who We Are</h2>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>Who We Are</h2>
           <p className={styles.sectionSubtitle}>
             The beginning of the most powerful tech company the world will ever know
           </p> 

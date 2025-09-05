@@ -6,9 +6,9 @@ const Values = () => {
   return (
     <section className={styles.values}>
       <div className={styles.container}>
-        <div className="flex flex-col text-center pb-10">
-          <h2 className="font-bold text-4xl w-full">Our Core Values</h2>
-          <p className="text-2xl">The principles that drive our innovation</p>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>Our Core Values</h2>
+          <p className={styles.sectionSubtitle}>The principles that drive our innovation</p>
         </div>
 
         <div className={styles.valuesGrid}>

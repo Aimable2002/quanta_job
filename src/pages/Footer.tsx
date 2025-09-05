@@ -71,12 +71,12 @@ const Footer = () => {
           <div className={styles.footerCol}>
             <h3 className={styles.footerTitle}>Legal</h3>
             <ul className={styles.footerLinks}>
-              <li><a href="/privacy">Privacy Policy</a></li>
-              <li><a href="/terms">Terms of Service</a></li>
-              <li><a href="/cookie-policy">Cookie Policy</a></li>
-              <li><a href="/gdpr">GDPR Compliance</a></li>
-              <li><a href="/security">Security</a></li>
-              <li><a href="/legal-notice">Legal Notice</a></li>
+              <li><a href="/privacy" target="_blank">Privacy Policy</a></li>
+              <li><a href="/terms" target="_blank">Terms of Service</a></li>
+              <li><a href="/cookie-policy" target="_blank">Cookie Policy</a></li>
+              <li><a href="/gdpr" target="_blank">GDPR Compliance</a></li>
+              <li><a href="/security" target="_blank">Security</a></li>
+              <li><a href="/legal-notice" target="_blank">Legal Notice</a></li>
             </ul>
           </div>
         </div>

@@ -60,11 +60,11 @@
   }
   
   .leftArrow {
-    left: 60px;
+    left: -25px;
   }
   
   .rightArrow {
-    right: 60px;
+    right: -25px;
   }
   
   .productsContainer:hover .scrollArrow {

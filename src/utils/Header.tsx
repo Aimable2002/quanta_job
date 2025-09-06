@@ -48,7 +48,6 @@ const Header = () => {
     { name: 'Support us', path: '#affiliate' },
     { name: 'Contact Us', path: '#contact' },
     { name: 'Leadership', path: '/leader' },
-    { name: 'Admin', path: '/admin' }
   ];
 
   return (

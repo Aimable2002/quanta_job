@@ -26,7 +26,6 @@ const Admin = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
   const [isLoading, setIsLoading] = useState(false);
-  const [isRegistering, setIsRegistering] = useState(false);
 
   const API_BASE = 'https://quanta-job.onrender.com';
 
@@ -115,7 +114,7 @@ const Admin = () => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      const endpoint = isRegistering ? null : '/api/auth/login';
+      const endpoint = '/api/auth/login';
       
       const response = await fetch(`${API_BASE}${endpoint}`, {
         method: 'POST',
@@ -135,14 +134,14 @@ const Admin = () => {
          localStorage.setItem('token', data.token);
          await fetchContacts(); // Wait for contacts to load
        } else {
-         const errorMessage = data.message || (isRegistering ? 'Registration failed' : 'Invalid username or password');
+         const errorMessage = data.message || ('Invalid username or password');
          setError(errorMessage);
          setErrorText(errorMessage);
          setShowErrorModal(true);
        }
     } catch (err) {
-      setError(isRegistering ? 'Registration failed' : 'Login failed');
-      setErrorText(isRegistering ? 'Registration failed. Please try again.' : 'Login failed. Please try again.');
+      setError('Login failed');
+      setErrorText('Login failed. Please try again.');
       setShowErrorModal(true);
     } finally {
       setIsLoading(false);
@@ -304,9 +303,9 @@ const Admin = () => {
         <div className={styles['login-box']}>
           <div className={styles['login-header']}>
             <h1>
-              <i className="fas fa-shield-alt"></i> {isRegistering ? 'Admin Registration' : 'Admin Login'}
+              <i className="fas fa-shield-alt"></i> {'Admin Login'}
             </h1>
-            <p>{isRegistering ? 'Create an admin account' : 'Access the admin dashboard'}</p>
+            <p>{'Access the admin dashboard'}</p>
           </div>
           <form className={styles['login-form']} onSubmit={handleLogin}>
             <div className={styles['form-group']}>
@@ -336,7 +335,7 @@ const Admin = () => {
               </div>
             </div>
             <button type="submit" className={styles['login-btn']} disabled={isLoading}>
-              <i className="fas fa-sign-in-alt"></i> {isLoading ? (isRegistering ? 'Registering...' : 'Logging in...') : (isRegistering ? 'Register' : 'Login')}
+              <i className="fas fa-sign-in-alt"></i> {isLoading ? ('Logging in...') : ('Login')}
             </button>
             
             {error && <div className={styles['error-message']}>{error}</div>}

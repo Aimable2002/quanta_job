@@ -41,6 +41,10 @@
   }
   
   .scrollArrow {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    
     background-color: white;
     color: #6e48aa;
     width: 50px;
@@ -58,6 +62,7 @@
     opacity: 0;
     visibility: hidden;
   }
+  
   
   .leftArrow {
     left: -25px;

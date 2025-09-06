@@ -115,7 +115,7 @@ const Admin = () => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      const endpoint = isRegistering ? '/api/auth/register' : '/api/auth/login';
+      const endpoint = isRegistering ? null : '/api/auth/login';
       
       const response = await fetch(`${API_BASE}${endpoint}`, {
         method: 'POST',
@@ -338,18 +338,6 @@ const Admin = () => {
             <button type="submit" className={styles['login-btn']} disabled={isLoading}>
               <i className="fas fa-sign-in-alt"></i> {isLoading ? (isRegistering ? 'Registering...' : 'Logging in...') : (isRegistering ? 'Register' : 'Login')}
             </button>
-            
-            <div className={styles['toggle-register']}>
-              <p>
-                {isRegistering ? 'Already have an account?' : "Don't have an account?"}{' '}
-                <span 
-                  onClick={() => setIsRegistering(!isRegistering)}
-                  className={styles['toggle-link']}
-                >
-                  {isRegistering ? 'Login here' : 'Register here'}
-                </span>
-              </p>
-            </div>
             
             {error && <div className={styles['error-message']}>{error}</div>}
           </form>

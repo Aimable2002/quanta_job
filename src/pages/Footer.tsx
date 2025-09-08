@@ -8,7 +8,7 @@ const Footer = () => {
   return (
 
 <footer className={`${styles.footer}`}>
-      <div className='px-[5%]'> 
+      <div className='px-[2%]'> 
         <div className={styles.footerGrid}>
           {/* About Column */}
           <div className={`${styles.footerCol} ${styles.footerAbout}`}>

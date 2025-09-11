@@ -37,6 +37,7 @@ const Products = () => {
           >
             <FaChevronLeft className='flex text-center'/>
           </button>
+          
           <div className={styles.productsScroll} ref={scrollContainerRef}>
             {productsData.map((product: Product) => (
               <div key={product.id} className={styles.productCard}>

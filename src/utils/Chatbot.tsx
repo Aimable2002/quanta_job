@@ -56,95 +56,235 @@ const Chatbot = () => {
     } catch (_) {}
   };
 
-  // Enhanced keyword matching function
-  const findBestMatch = (message: string, keywordMap: Record<string, string>): string | null => {
-    const words = message.toLowerCase().split(/\s+/);
+  // Enhanced keyword matching function with adjustable weights
+  const findBestMatch = (message: string): string | null => {
+    const lowerMsg = message.toLowerCase();
+    const words = lowerMsg.split(/\s+/);
     let bestMatch = null;
     let highestScore = 0;
 
-    for (const [keywords, response] of Object.entries(keywordMap)) {
-      const keywordList = keywords.split('|');
+    for (const mapping of keywordMappings) {
       let score = 0;
 
-      for (const keyword of keywordList) {
-        if (words.includes(keyword)) {
-          score += 1;
-        }
-      }
-
-      // Additional scoring for consecutive word matches (phrases)
-      for (const phrase of keywordList.filter(k => k.includes(' '))) {
-        if (message.toLowerCase().includes(phrase)) {
-          score += 2; // Higher score for phrase matches
+      for (const kw of mapping.keywords) {
+        if (kw.term.includes(' ')) {
+          // Phrase match
+          if (lowerMsg.includes(kw.term)) {
+            score += kw.weight;
+          }
+        } else {
+          // Single word match
+          if (words.includes(kw.term)) {
+            score += kw.weight;
+          }
         }
       }
 
       if (score > highestScore) {
         highestScore = score;
-        bestMatch = response;
+        bestMatch = mapping.response;
       }
     }
 
     return highestScore > 0 ? bestMatch : null;
   };
 
+  // Define keyword mappings with weighted keywords and phrases
+  const keywordMappings: {
+    keywords: { term: string; weight: number }[];
+    response: string;
+  }[] = [
+    // About QUANTA (higher weight on core terms like 'quanta')
+    {
+      keywords: [
+        { term: 'about', weight: 1 },
+        { term: 'quanta', weight: 3 },
+        { term: 'what', weight: 1 },
+        { term: 'company', weight: 2 },
+        { term: 'mission', weight: 2 },
+        { term: 'vision', weight: 2 },
+        { term: 'about quanta', weight: 4 },
+        { term: 'what is quanta', weight: 4 },
+      ],
+      response:
+        "QUANTA is a pioneering AI technology company dedicated to advancing productivity, learning, and automation. We're committed to leading humanity into the next era of intelligence.",
+    },
+    // Products (higher weight on 'products' and phrases)
+    {
+      keywords: [
+        { term: 'products', weight: 3 },
+        { term: 'ai product', weight: 3 },
+        { term: 'offerings', weight: 2 },
+        { term: 'solutions', weight: 2 },
+        { term: 'what do you sell', weight: 4 },
+        { term: 'offer', weight: 1 },
+        { term: 'tools', weight: 1 },
+        { term: 'systems', weight: 1 },
+        { term: 'ai products', weight: 4 },
+      ],
+      response:
+        'Our AI products include intelligent assistants, automation tools, vision systems, and custom AI solutions tailored to business needs.',
+    },
+    // Team & Leadership (higher weight on names and 'leadership')
+    {
+      keywords: [
+        { term: 'team', weight: 2 },
+        { term: 'careers', weight: 2 },
+        { term: 'leadership', weight: 3 },
+        { term: 'enock', weight: 3 },
+        { term: 'ornella', weight: 3 },
+        { term: 'lewis', weight: 3 },
+        { term: 'victoire', weight: 3 },
+        { term: 'employees', weight: 1 },
+        { term: 'staff', weight: 1 },
+        { term: 'who', weight: 1 },
+        { term: 'people', weight: 1 },
+        { term: 'leadership team', weight: 4 },
+      ],
+      response:
+        "At QUANTA, leadership means empathy for users, extreme ownership of outcomes, and a 100x mindset for speed, quality, and impact. Our leadership team includes Enock Kanamugire (Founder & CEO), Ornella (Chief Growth Officer), Lewis Ndatimana (Head of Business Development), and Victoire Ushindi (Lead Software Engineer). Visit our Leadership page under About to learn more.",
+    },
+    // Internships (higher weight on 'internship')
+    {
+      keywords: [
+        { term: 'internship', weight: 3 },
+        { term: 'intern', weight: 3 },
+        { term: 'student program', weight: 2 },
+        { term: 'training', weight: 2 },
+        { term: 'learn', weight: 1 },
+        { term: 'practice', weight: 1 },
+        { term: 'internship program', weight: 4 },
+      ],
+      response:
+        'We offer internship programs for students passionate about AI and technology. Apply through our Careers page to gain hands-on experience.',
+    },
+    // Contact (higher weight on 'contact' and phrases)
+    {
+      keywords: [
+        { term: 'contact', weight: 3 },
+        { term: 'demo', weight: 2 },
+        { term: 'email', weight: 2 },
+        { term: 'phone', weight: 2 },
+        { term: 'call', weight: 1 },
+        { term: 'reach', weight: 1 },
+        { term: 'get in touch', weight: 4 },
+        { term: 'address', weight: 1 },
+        { term: 'location', weight: 1 },
+        { term: 'contact us', weight: 4 },
+      ],
+      response:
+        "You can contact us at contact@quanta.example or call +250 79 44 12 876. We're happy to schedule a demo of our solutions.",
+    },
+    // Client Stories (higher weight on 'client' and 'stories')
+    {
+      keywords: [
+        { term: 'client', weight: 3 },
+        { term: 'stories', weight: 3 },
+        { term: 'testimonial', weight: 2 },
+        { term: 'results', weight: 1 },
+        { term: 'success', weight: 2 },
+        { term: 'case study', weight: 2 },
+        { term: 'achievement', weight: 1 },
+        { term: 'client stories', weight: 4 },
+        { term: 'success stories', weight: 4 },
+      ],
+      response:
+        "Our clients have achieved remarkable results with our AI solutions. 'QUANTA transformed our workflow efficiency by 40%' - Happy Client",
+    },
+    // Partnerships (higher weight on 'partnership')
+    {
+      keywords: [
+        { term: 'partnership', weight: 3 },
+        { term: 'collaboration', weight: 2 },
+        { term: 'partner', weight: 2 },
+        { term: 'work together', weight: 4 },
+        { term: 'joint', weight: 1 },
+        { term: 'affiliate', weight: 1 },
+      ],
+      response:
+        'We welcome partnerships with organizations that share our vision. Email partnerships@quanta.example to explore collaboration opportunities.',
+    },
+    // Getting Started (higher weight on 'get started')
+    {
+      keywords: [
+        { term: 'get started', weight: 4 },
+        { term: 'start', weight: 2 },
+        { term: 'how to begin', weight: 3 },
+        { term: 'onboard', weight: 2 },
+        { term: 'implementation', weight: 2 },
+        { term: 'process', weight: 1 },
+        { term: 'getting started', weight: 4 },
+      ],
+      response:
+        'To get started with QUANTA, contact our team for a consultation. We\'ll guide you through the implementation process step by step.',
+    },
+    // Research & Innovation (higher weight on 'research' and 'innovation')
+    {
+      keywords: [
+        { term: 'research', weight: 3 },
+        { term: 'innovation', weight: 3 },
+        { term: 'program', weight: 1 },
+        { term: 'invent', weight: 2 },
+        { term: 'develop', weight: 1 },
+        { term: 'prototype', weight: 2 },
+        { term: 'r&d', weight: 2 },
+        { term: 'research program', weight: 4 },
+        { term: 'innovation program', weight: 4 },
+      ],
+      response:
+        "Invent the future with us! Our Research & Innovation Program is QUANTA's engine, prototyping and validating AI systems for human and planetary needs. Focus areas include Advanced NLP, Human–AI collaboration, reliable systems, and ethics by design. Join small, elite teams for rapid iteration and visible results. Apply at research@quanta-ai.xyz.",
+    },
+    // Services (higher weight on 'services')
+    {
+      keywords: [
+        { term: 'services', weight: 3 },
+        { term: 'what can you do', weight: 4 },
+        { term: 'help with', weight: 2 },
+        { term: 'provide', weight: 1 },
+        { term: 'assist', weight: 1 },
+        { term: 'support', weight: 1 },
+      ],
+      response:
+        "Our services include intelligent assistants, automation tools, vision systems, and custom AI solutions. Looking to invent with us? See our Research & Innovation Program.",
+    },
+    // Why Choose Us (higher weight on 'why' phrases)
+    {
+      keywords: [
+        { term: 'why choose', weight: 4 },
+        { term: 'why us', weight: 4 },
+        { term: 'why quanta', weight: 4 },
+        { term: 'advantages', weight: 2 },
+        { term: 'benefits', weight: 2 },
+        { term: 'difference', weight: 1 },
+        { term: 'edge', weight: 1 },
+        { term: 'why choose us', weight: 5 },
+      ],
+      response:
+        'We offer innovative solutions, expert team support, ethical AI development, and proven results. Our clients choose us for quality and reliability.',
+    },
+    // Privacy & Security (higher weight on 'privacy' and 'security')
+    {
+      keywords: [
+        { term: 'privacy', weight: 3 },
+        { term: 'security', weight: 3 },
+        { term: 'data protection', weight: 2 },
+        { term: 'gdpr', weight: 2 },
+        { term: 'safe', weight: 1 },
+        { term: 'secure', weight: 1 },
+        { term: 'confidential', weight: 1 },
+        { term: 'data privacy', weight: 4 },
+      ],
+      response:
+        'We take data privacy and security seriously. We\'re fully compliant with GDPR and industry best practices to protect your information.',
+    },
+  ];
+
   const getBotResponse = (message: string): string => {
     const lowerMsg = message.toLowerCase();
     const emotionalResponse = getEmotionalResponse(lowerMsg);
     if (emotionalResponse) return emotionalResponse;
 
-    // Define keyword mappings with weighted scoring
-    const keywordMappings = {
-      // About QUANTA
-      'about|quanta|what|company|mission|vision': 
-        "QUANTA is a pioneering AI technology company dedicated to advancing productivity, learning, and automation. We're committed to leading humanity into the next era of intelligence.",
-      
-      // Products
-      'products|ai product|offerings|solutions|what do you sell|offer|tools|systems': 
-        'Our AI products include intelligent assistants, automation tools, vision systems, and custom AI solutions tailored to business needs.',
-      
-      // Team & Leadership
-      'team|careers|leadership|enock|ornella|lewis|victoire|employees|staff|who|people': 
-        "At QUANTA, leadership means empathy for users, extreme ownership of outcomes, and a 100x mindset for speed, quality, and impact. Our leadership team includes Enock Kanamugire (Founder & CEO), Ornella (Chief Growth Officer), Lewis Ndatimana (Head of Business Development), and Victoire Ushindi (Lead Software Engineer). Visit our Leadership page under About to learn more.",
-      
-      // Internships
-      'internship|intern|student program|training|learn|practice': 
-        'We offer internship programs for students passionate about AI and technology. Apply through our Careers page to gain hands-on experience.',
-      
-      // Contact
-      'contact|demo|email|phone|call|reach|get in touch|address|location': 
-        'You can contact us at contact@quanta.example or call +250 79 44 12 876. We\'re happy to schedule a demo of our solutions.',
-      
-      // Client Stories
-      'client|stories|testimonial|results|success|case study|achievement': 
-        "Our clients have achieved remarkable results with our AI solutions. 'QUANTA transformed our workflow efficiency by 40%' - Happy Client",
-      
-      // Partnerships
-      'partnership|collaboration|partner|work together|joint|affiliate': 
-        'We welcome partnerships with organizations that share our vision. Email partnerships@quanta.example to explore collaboration opportunities.',
-      
-      // Getting Started
-      'get started|start|how to begin|onboard|implementation|process': 
-        'To get started with QUANTA, contact our team for a consultation. We\'ll guide you through the implementation process step by step.',
-      
-      // Research & Innovation
-      'research|innovation|program|invent|develop|prototype|r&d': 
-        "Invent the future with us! Our Research & Innovation Program is QUANTA's engine, prototyping and validating AI systems for human and planetary needs. Focus areas include Advanced NLP, Human–AI collaboration, reliable systems, and ethics by design. Join small, elite teams for rapid iteration and visible results. Apply at research@quanta-ai.xyz.",
-      
-      // Services
-      'services|what can you do|help with|provide|assist|support': 
-        "Our services include intelligent assistants, automation tools, vision systems, and custom AI solutions. Looking to invent with us? See our Research & Innovation Program.",
-      
-      // Why Choose Us
-      'why choose|why us|why quanta|advantages|benefits|difference|edge': 
-        'We offer innovative solutions, expert team support, ethical AI development, and proven results. Our clients choose us for quality and reliability.',
-      
-      // Privacy & Security
-      'privacy|security|data protection|gdpr|safe|secure|confidential': 
-        'We take data privacy and security seriously. We\'re fully compliant with GDPR and industry best practices to protect your information.'
-    };
-
-    const bestMatch = findBestMatch(lowerMsg, keywordMappings);
+    const bestMatch = findBestMatch(lowerMsg);
     
     if (bestMatch) {
       return bestMatch;

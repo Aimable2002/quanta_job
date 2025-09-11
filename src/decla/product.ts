@@ -8,8 +8,8 @@ import product5 from '../assets/images/product5.jpg'
 const productsData: Product[] = [
   {
     id: 1,
-    name: "QUANTA AI Assistant",
-    description: "Next-gen personal assistant with AGI capabilities for business and personal use.",
+    name: "Divinex Web App",
+    description: "Divinex helps religious communities worldwide host live and recorded services...",
     image: Aiassa,
     rating: "4.9/5",
     downloads: "10K+",
